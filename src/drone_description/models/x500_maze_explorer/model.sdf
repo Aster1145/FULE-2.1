@@ -1,0 +1,134 @@
+<?xml version="1.0"?>
+<sdf version="1.9">
+  <model name="x500_maze_explorer">
+    <link name="base_link">
+      <inertial>
+        <mass>1.5</mass>
+        <inertia><ixx>0.02</ixx><iyy>0.02</iyy><izz>0.04</izz><ixy>0</ixy><ixz>0</ixz><iyz>0</iyz></inertia>
+      </inertial>
+      <visual name="base_visual">
+        <geometry><box><size>0.3 0.3 0.1</size></box></geometry>
+        <material><diffuse>0.2 0.2 0.2 1</diffuse></material>
+      </visual>
+    </link>
+
+    <!-- IMU -->
+    <link name="imu_link">
+      <pose>0 0 0 0 0 0</pose>
+      <sensor name="imu_sensor" type="imu">
+        <always_on>true</always_on>
+        <update_rate>200</update_rate>
+        <visualize>false</visualize>
+        <topic>/imu</topic>
+        <gz_frame_id>imu_link</gz_frame_id>
+      </sensor>
+    </link>
+    <joint name="imu_joint" type="fixed">
+      <parent>base_link</parent><child>imu_link</child>
+    </joint>
+
+    <!-- Stereo Camera for VIO (left & right) -->
+    <link name="stereo_left_link">
+      <pose>0.15 0.05 0.05 0 0 0</pose>
+      <sensor name="stereo_left_camera" type="camera">
+        <camera>
+          <horizontal_fov>1.57</horizontal_fov>
+          <image><width>640</width><height>480</height></image>
+          <clip><near>0.1</near><far>30</far></clip>
+        </camera>
+        <always_on>true</always_on>
+        <update_rate>30</update_rate>
+        <topic>/camera/left/image_raw</topic>
+        <gz_frame_id>stereo_left_link</gz_frame_id>
+      </sensor>
+    </link>
+    <joint name="stereo_left_joint" type="fixed"><parent>base_link</parent><child>stereo_left_link</child></joint>
+
+    <link name="stereo_right_link">
+      <pose>0.15 -0.05 0.05 0 0 0</pose>
+      <sensor name="stereo_right_camera" type="camera">
+        <camera>
+          <horizontal_fov>1.57</horizontal_fov>
+          <image><width>640</width><height>480</height></image>
+          <clip><near>0.1</near><far>30</far></clip>
+        </camera>
+        <always_on>true</always_on>
+        <update_rate>30</update_rate>
+        <topic>/camera/right/image_raw</topic>
+        <gz_frame_id>stereo_right_link</gz_frame_id>
+      </sensor>
+    </link>
+    <joint name="stereo_right_joint" type="fixed"><parent>base_link</parent><child>stereo_right_link</child></joint>
+
+    <!-- RGB Camera for YOLO Person Detection -->
+    <link name="rgb_camera_link">
+      <pose>0.2 0 0 0 0.2 0</pose>
+      <sensor name="rgb_camera" type="camera">
+        <camera>
+          <horizontal_fov>1.2</horizontal_fov>
+          <image><width>1280</width><height>720</height></image>
+          <clip><near>0.1</near><far>50</far></clip>
+        </camera>
+        <always_on>true</always_on>
+        <update_rate>15</update_rate>
+        <topic>/camera/rgb/image_raw</topic>
+        <gz_frame_id>rgb_camera_link</gz_frame_id>
+      </sensor>
+    </link>
+    <joint name="rgb_camera_joint" type="fixed"><parent>base_link</parent><child>rgb_camera_link</child></joint>
+
+    <!-- Depth Camera for mapping -->
+    <link name="depth_camera_link">
+      <pose>0.2 0 -0.05 0 0.2 0</pose>
+      <sensor name="depth_camera" type="depth_camera">
+        <camera>
+          <horizontal_fov>1.5</horizontal_fov>
+          <image><width>640</width><height>480</height></image>
+          <clip><near>0.2</near><far>10</far></clip>
+        </camera>
+        <always_on>true</always_on>
+        <update_rate>10</update_rate>
+        <topic>/camera/depth</topic>
+        <gz_frame_id>depth_camera_link</gz_frame_id>
+      </sensor>
+    </link>
+    <joint name="depth_camera_joint" type="fixed"><parent>base_link</parent><child>depth_camera_link</child></joint>
+
+    <!-- RPLidar A2 - 360deg 2D lidar -->
+    <link name="rplidar_link">
+      <pose>0 0 0.12 0 0 0</pose>
+      <sensor name="rplidar" type="gpu_ray">
+        <gz_frame_id>rplidar_link</gz_frame_id>
+        <topic>/scan</topic>
+        <ray>
+          <scan>
+            <horizontal><samples>720</samples><resolution>1</resolution><min_angle>-3.14159</min_angle><max_angle>3.14159</max_angle></horizontal>
+          </scan>
+          <range><min>0.15</min><max>12</max><resolution>0.01</resolution></range>
+        </ray>
+        <always_on>true</always_on>
+        <update_rate>10</update_rate>
+        <visualize>true</visualize>
+      </sensor>
+    </link>
+    <joint name="rplidar_joint" type="fixed"><parent>base_link</parent><child>rplidar_link</child></joint>
+
+    <!-- PX4 Plugins -->
+    <plugin filename="gz-sim-multicopter-motor-model-system" name="gz::sim::systems::MulticopterMotorModel">
+      <jointName>rotor_0_joint</jointName><linkName>rotor_0</linkName><turningDirection>ccw</turningDirection><timeConstantUp>0.0125</timeConstantUp><timeConstantDown>0.025</timeConstantDown><maxRotVelocity>1000</maxRotVelocity><motorConstant>8.54858e-06</motorConstant><momentConstant>0.016</momentConstant><commandSubTopic>/model/x500_maze_explorer/joint/rotor_0_joint/cmd_vel</commandSubTopic><motorNumber>0</motorNumber><rotorDragCoefficient>8e-05</rotorDragCoefficient><rollingMomentCoefficient>1e-06</rollingMomentCoefficient><rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+    </plugin>
+    <!-- Simplified: 4 rotors would be defined similarly, but for brevity use generic multicopter -->
+    <plugin filename="gz-sim-multicopter-vehicle-system" name="gz::sim::systems::MulticopterVehicle">
+      <rotorJointName>rotor_0_joint</rotorJointName>
+    </plugin>
+
+    <!-- For PX4 SITL integration -->
+    <plugin filename="gz-sim-air-pressure-system" name="gz::sim::systems::AirPressure">
+      <topic>/air_pressure</topic>
+    </plugin>
+    <plugin filename="gz-sim-magnetometer-system" name="gz::sim::systems::Magnetometer">
+      <topic>/magnetometer</topic>
+    </plugin>
+
+  </model>
+</sdf>

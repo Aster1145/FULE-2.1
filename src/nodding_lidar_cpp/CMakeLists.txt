@@ -1,0 +1,20 @@
+cmake_minimum_required(VERSION 3.8)
+project(nodding_lidar_cpp)
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  add_compile_options(-O3 -march=native)
+endif()
+find_package(ament_cmake REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(sensor_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
+find_package(std_msgs REQUIRED)
+
+add_executable(oscillation_controller src/oscillation_controller.cpp)
+ament_target_dependencies(oscillation_controller rclcpp std_msgs sensor_msgs)
+
+add_executable(scan_to_3d src/scan_to_3d.cpp)
+ament_target_dependencies(scan_to_3d rclcpp sensor_msgs geometry_msgs)
+
+install(TARGETS oscillation_controller scan_to_3d DESTINATION lib/${PROJECT_NAME})
+install(DIRECTORY launch config DESTINATION share/${PROJECT_NAME})
+ament_package()

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>air_mouse_mission</name>
+  <version>1.0.0</version>
+  <description>NIDAR 2026 AirMouse mission manager - 15x15m maze, 6 survivors, 2D map, emergency stop</description>
+  <maintainer email="nidar@airmouse.in">NIDAR Team</maintainer>
+  <license>MIT</license>
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>ament_cmake_python</buildtool_depend>
+  <depend>rclpy</depend>
+  <depend>nav_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>std_msgs</depend>
+  <export><build_type>ament_cmake</build_type></export>
+</package>

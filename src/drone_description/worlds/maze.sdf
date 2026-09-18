@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<sdf version="1.9">
+  <world name="maze">
+    <physics name="1ms" type="ignored">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"/>
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster"/>
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands"/>
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+
+    <!-- Ground -->
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><plane><normal>0 0 1</normal><size>100 100</size></plane></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><plane><normal>0 0 1</normal><size>100 100</size></plane></geometry>
+          <material><ambient>0.8 0.8 0.8 1</ambient><diffuse>0.8 0.8 0.8 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <!-- Maze Walls - 20x20m maze, 1.5m corridors, 2m high -->
+    <!-- Outer boundary -->
+    <model name="wall_outer_north"><static>true</static><pose>0 10 1 0 0 0</pose><link name="link"><collision name="c"><geometry><box><size>20 0.2 2</size></box></geometry></collision><visual name="v"><geometry><box><size>20 0.2 2</size></box></geometry><material><diffuse>0.3 0.3 0.3 1</diffuse></material></visual></link></model>
+    <model name="wall_outer_south"><static>true</static><pose>0 -10 1 0 0 0</pose><link name="link"><collision name="c"><geometry><box><size>20 0.2 2</size></box></geometry></collision><visual name="v"><geometry><box><size>20 0.2 2</size></box></geometry><material><diffuse>0.3 0.3 0.3 1</diffuse></material></visual></link></model>
+    <model name="wall_outer_east"><static>true</static><pose>10 0 1 0 0 0</pose><link name="link"><collision name="c"><geometry><box><size>0.2 20 2</size></box></geometry></collision><visual name="v"><geometry><box><size>0.2 20 2</size></box></geometry><material><diffuse>0.3 0.3 0.3 1</diffuse></material></visual></link></model>
+    <model name="wall_outer_west"><static>true</static><pose>-10 0 1 0 0 0</pose><link name="link"><collision name="c"><geometry><box><size>0.2 20 2</size></box></geometry></collision><visual name="v"><geometry><box><size>0.2 20 2</size></box></geometry><material><diffuse>0.3 0.3 0.3 1</diffuse></material></visual></link></model>
+
+    <!-- Internal maze walls (simplified maze pattern) -->
+    <model name="maze_wall_1"><static>true</static><pose>-5 5 1 0 0 0</pose><link name="link"><collision name="c"><geometry><box><size>8 0.2 2</size></box></geometry></collision><visual name="v"><geometry><box><size>8 0.2 2</size></box></geometry><material><diffuse>0.5 0.5 0.5 1</diffuse></material></visual></link></model>
+    <model name="maze_wall_2"><static>true</static><pose>0 2 1 0 0 0</pose><link name="link"><collision name="c"><geometry><box><size>0.2 6 2</size></box></geometry></collision><visual name="v"><geometry><box><size>0.2 6 2</size></box></geometry><material><diffuse>0.5 0.5 0.5 1</diffuse></material></visual></link></model>
+    <model name="maze_wall_3"><static>true</static><pose>5 0 1 0 0 0</pose><link name="link"><collision name="c"><geometry><box><size>6 0.2 2</size></box></geometry></collision><visual name="v"><geometry><box><size>6 0.2 2</size></box></geometry><material><diffuse>0.5 0.5 0.5 1</diffuse></material></visual></link></model>
+    <model name="maze_wall_4"><static>true</static><pose>-2 -3 1 0 0 0</pose><link name="link"><collision name="c"><geometry><box><size>6 0.2 2</size></box></geometry></collision><visual name="v"><geometry><box><size>6 0.2 2</size></box></geometry><material><diffuse>0.5 0.5 0.5 1</diffuse></material></visual></link></model>
+    <model name="maze_wall_5"><static>true</static><pose>-6 -2 1 0 0 0</pose><link name="link"><collision name="c"><geometry><box><size>0.2 6 2</size></box></geometry></collision><visual name="v"><geometry><box><size>0.2 6 2</size></box></geometry><material><diffuse>0.5 0.5 0.5 1</diffuse></material></visual></link></model>
+    <model name="maze_wall_6"><static>true</static><pose>3 6 1 0 0 0</pose><link name="link"><collision name="c"><geometry><box><size>0.2 4 2</size></box></geometry></collision><visual name="v"><geometry><box><size>0.2 4 2</size></box></geometry><material><diffuse>0.5 0.5 0.5 1</diffuse></material></visual></link></model>
+    <model name="maze_wall_7"><static>true</static><pose>-3 8 1 0 0 0</pose><link name="link"><collision name="c"><geometry><box><size>4 0.2 2</size></box></geometry></collision><visual name="v"><geometry><box><size>4 0.2 2</size></box></geometry><material><diffuse>0.5 0.5 0.5 1</diffuse></material></visual></link></model>
+    <model name="maze_wall_8"><static>true</static><pose>7 -5 1 0 0 0</pose><link name="link"><collision name="c"><geometry><box><size>0.2 6 2</size></box></geometry></collision><visual name="v"><geometry><box><size>0.2 6 2</size></box></geometry><material><diffuse>0.5 0.5 0.5 1</diffuse></material></visual></link></model>
+
+    <!-- Person models (using simple actor boxes for simulation, replace with actual human mesh) -->
+    <model name="person_1"><static>true</static><pose>2 2 0.9 0 0 0</pose>
+      <link name="link"><collision name="c"><geometry><box><size>0.4 0.3 1.8</size></box></geometry></collision>
+      <visual name="v"><geometry><box><size>0.4 0.3 1.8</size></box></geometry><material><diffuse>0 0 1 1</diffuse></material></visual></link>
+    </model>
+    <model name="person_2"><static>true</static><pose>-4 -6 0.9 0 0 0</pose>
+      <link name="link"><collision name="c"><geometry><box><size>0.4 0.3 1.8</size></box></geometry></collision>
+      <visual name="v"><geometry><box><size>0.4 0.3 1.8</size></box></geometry><material><diffuse>0 1 0 1</diffuse></material></visual></link>
+    </model>
+    <model name="person_3"><static>true</static><pose>8 7 0.9 0 0 0</pose>
+      <link name="link"><collision name="c"><geometry><box><size>0.4 0.3 1.8</size></box></geometry></collision>
+      <visual name="v"><geometry><box><size>0.4 0.3 1.8</size></box></geometry><material><diffuse>1 0 0 1</diffuse></material></visual></link>
+    </model>
+
+  </world>
+</sdf>

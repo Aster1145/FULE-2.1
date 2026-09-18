@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<sdf version="1.9">
+  <model name="oak_d_lite_mount">
+    <link name="oak_d_lite_link">
+      <inertial><mass>0.061</mass><inertia><ixx>0.0001</ixx><iyy>0.0001</iyy><izz>0.0001</izz></inertia></inertial>
+      <visual name="oak_visual">
+        <geometry><box><size>0.091 0.0278 0.0175</size></box></geometry>
+        <material><diffuse>0.1 0.1 0.1 1</diffuse></material>
+      </visual>
+      <!-- OAK-D Lite sensors are defined via depthai_ros_driver, not here -->
+    </link>
+  </model>
+</sdf>

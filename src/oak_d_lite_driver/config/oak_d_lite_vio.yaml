@@ -1,0 +1,67 @@
+# OAK-D Lite config for NIDAR AirMouse - ROS2 Humble + depthai_ros_driver
+# Stereo OV7251 640x480 + RGB IMX214 13MP + BMI270 IMU
+# Optimized for indoor maze, low light, VIO
+
+oak:
+  ros__parameters:
+    camera:
+      i_enable_imu: true
+      i_enable_ir: false
+      i_pipeline_type: RGBD
+      i_usb_speed: SUPER
+      i_publish_tf_from_calibration: true
+      i_tf_base_frame: oak-d-base-frame
+      i_tf_parent_frame: base_link
+      i_tf_cam_pos_x: '0.15'  # 15cm forward from base
+      i_tf_cam_pos_y: '0.0'
+      i_tf_cam_pos_z: '0.05'
+      i_tf_cam_roll: '0.0'
+      i_tf_cam_pitch: '0.0'
+      i_tf_cam_yaw: '0.0'
+      i_tf_imu_from_descr: true
+      i_mx_id: ''
+    rgb:
+      i_resolution: '1080P'  # 1920x1080 for person detection, downscale for VIO
+      i_fps: 15.0
+      i_preview_size: 640
+      i_preview_width: 640
+      i_preview_height: 400
+      i_publish_topic: true
+      i_low_bandwidth: false
+      i_enable_preview: true
+    left:
+      i_resolution: '400P'  # 640x400 for stereo VIO, OV7251
+      i_fps: 30.0
+      i_publish_topic: true
+      i_low_bandwidth: false
+    right:
+      i_resolution: '400P'
+      i_fps: 30.0
+      i_publish_topic: true
+      i_low_bandwidth: false
+    stereo:
+      i_resolution: '400P'
+      i_fps: 30.0
+      i_publish_topic: true
+      i_align_depth: true
+      i_depth_preset: HIGH_ACCURACY
+      i_lr_check: true
+      i_extended_disp: false
+      i_subpixel: true
+      i_enable_spatial_filter: true
+      i_enable_temporal_filter: true
+      i_enable_threshold_filter: true
+      i_stereo_conf_threshold: 200
+      i_disparity_width: DISPARITY_96
+    imu:
+      i_acc_freq: 200
+      i_gyro_freq: 200
+      i_batch_report_threshold: 5
+      i_max_batch_reports: 10
+      i_sync_method: LINEAR_INTERPOLATE_ACCEL
+      i_enable_rotation: false
+    pipeline_gen:
+      i_pipeline_type: RGBD
+    # For VIO via SpectacularAI (if installed)
+    # Requires depthai + spectacularAI pip packages
+    # If not using SpectacularAI, use rtabmap or VINS-Fusion with stereo+IMU

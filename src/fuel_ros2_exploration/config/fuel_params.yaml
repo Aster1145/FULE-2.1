@@ -1,0 +1,28 @@
+mapping_node:
+  ros__parameters:
+    map_size: 20.0
+    resolution: 0.1
+    voxel_height: 3.0
+    origin_x: -10.0
+    origin_y: -10.0
+
+frontier_detector:
+  ros__parameters:
+    min_frontier_size: 8
+    cluster_tolerance: 0.5
+    sensor_range: 4.0
+    info_gain_threshold: 10
+
+planner_node:
+  ros__parameters:
+    planning_height: 1.5
+    max_vel: 1.0
+    max_acc: 1.0
+    safety_margin: 0.3
+
+exploration_manager:
+  ros__parameters:
+    exploration_timeout: 600.0
+    home_x: 0.0
+    home_y: 0.0
+    save_map_path: /tmp/maze_map

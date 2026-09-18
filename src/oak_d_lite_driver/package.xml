@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>oak_d_lite_driver</name>
+  <version>1.0.0</version>
+  <description>OAK-D Lite driver for NIDAR AirMouse - stereo VIO + RGB</description>
+  <maintainer email="nidar@airmouse.in">NIDAR Team</maintainer>
+  <license>MIT</license>
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <exec_depend>depthai-ros</exec_depend>
+  <exec_depend>depthai_ros_driver</exec_depend>
+  <export><build_type>ament_cmake</build_type></export>
+</package>

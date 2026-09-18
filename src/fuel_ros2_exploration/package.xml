@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>fuel_ros2_exploration</name>
+  <version>1.0.0</version>
+  <description>FUEL-inspired exploration ported to ROS2 Humble for maze drone</description>
+  <maintainer email="dev@auto.drone">Auto Drone</maintainer>
+  <license>MIT</license>
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>ament_cmake_python</buildtool_depend>
+  <depend>rclpy</depend>
+  <depend>nav_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>visualization_msgs</depend>
+  <depend>tf2_ros</depend>
+  <depend>cv_bridge</depend>
+  <export><build_type>ament_cmake</build_type></export>
+</package>

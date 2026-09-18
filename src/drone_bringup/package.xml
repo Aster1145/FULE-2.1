@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>drone_bringup</name>
+  <version>1.0.0</version>
+  <description>Bringup for autonomous maze drone</description>
+  <maintainer email="dev@auto.drone">Auto Drone</maintainer>
+  <license>MIT</license>
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <exec_depend>ros_gz_bridge</exec_depend>
+  <exec_depend>fuel_ros2_exploration</exec_depend>
+  <exec_depend>offboard_control</exec_depend>
+  <exec_depend>person_detection</exec_depend>
+  <exec_depend>maze_mapping</exec_depend>
+  <export><build_type>ament_cmake</build_type></export>
+</package>

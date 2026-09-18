@@ -1,0 +1,30 @@
+#!/bin/sh
+# PX4 custom airframe for maze explorer: X500 with VIO + RPLidar
+# Place in ~/PX4-Autopilot/ROMFS/px4fmu_common/init.d-posix/airframes/
+
+. ${R}etc/init.d-posix/airframes/4001_gz_x500
+
+# Additional sensors
+# Stereo camera already in Gazebo model
+# RPLidar simulated via gpu_ray
+
+# EKF2 params for VIO
+param set-default EKF2_AID_MASK 24
+param set-default EKF2_HGT_REF 3
+param set-default EKF2_EV_DELAY 100
+param set-default EKF2_EV_POS_X 0.15
+param set-default EKF2_EV_POS_Y 0.0
+param set-default EKF2_EV_POS_Z -0.05
+param set-default EKF2_EV_QMIN 0.1
+
+# Offboard
+param set-default COM_OBL_ACT 1
+param set-default COM_OBL_RC_ACT 0
+param set-default NAV_RCL_ACT 0
+param set-default NAV_DLL_ACT 0
+
+# Safety for indoor
+param set-default MPC_XY_VEL_MAX 1.0
+param set-default MPC_Z_VEL_MAX_UP 1.0
+param set-default MPC_Z_VEL_MAX_DN 1.0
+param set-default MPC_TKO_SPEED 1.0

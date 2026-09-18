@@ -1,0 +1,26 @@
+# ROS2 build
+build/
+install/
+log/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+*.so
+*.o
+*.a
+.DS_Store
+.vscode/
+.idea/
+# Models
+*.onnx
+*.engine
+*.pt
+# Maps
+/tmp/
+*.pgm
+*.png
+*.yaml
+!**/config/*.yaml
+# Secrets
+.env

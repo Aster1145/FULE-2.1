@@ -1,0 +1,20 @@
+cmake_minimum_required(VERSION 3.8)
+project(offboard_control_cpp)
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  add_compile_options(-O3 -march=native)
+endif()
+find_package(ament_cmake REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(px4_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
+find_package(nav_msgs REQUIRED)
+
+add_executable(offboard_controller src/offboard_controller.cpp)
+ament_target_dependencies(offboard_controller rclcpp px4_msgs geometry_msgs nav_msgs)
+
+add_executable(vio_bridge src/vio_bridge.cpp)
+ament_target_dependencies(vio_bridge rclcpp px4_msgs geometry_msgs nav_msgs)
+
+install(TARGETS offboard_controller vio_bridge DESTINATION lib/${PROJECT_NAME})
+install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
+ament_package()

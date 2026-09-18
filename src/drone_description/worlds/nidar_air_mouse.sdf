@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<sdf version="1.9">
+  <world name="nidar_air_mouse">
+    <physics name="1ms" type="ignored">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"/>
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster"/>
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands"/>
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision"><geometry><plane><normal>0 0 1</normal><size>30 30</size></plane></geometry></collision>
+        <visual name="visual"><geometry><plane><normal>0 0 1</normal><size>30 30</size></plane></geometry><material><ambient>0.8 0.8 0.8 1</ambient><diffuse>0.8 0.8 0.8 1</diffuse></material></visual>
+      </link>
+    </model>
+
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <!-- NIDAR AirMouse arena: 15x15m, launch pad 2ft x 2ft at origin -->
+    <model name="launch_pad"><static>true</static><pose>0 0 0.01 0 0 0</pose>
+      <link name="link"><visual name="v"><geometry><box><size>0.6096 0.6096 0.02</size></box></geometry><material><diffuse>0 1 0 1</diffuse></material></visual></link>
+    </model>
+
+    <!-- Outer walls 15x15m -->
+    <model name="outer_north"><static>true</static><pose>0 7.5 1.22 0 0 0</pose><link name="link"><collision name="c"><geometry><box><size>15 0.2 2.44</size></box></geometry></collision><visual name="v"><geometry><box><size>15 0.2 2.44</size></box></geometry><material><diffuse>0.3 0.3 0.3 1</diffuse></material></visual></link></model>
+    <model name="outer_south"><static>true</static><pose>0 -7.5 1.22 0 0 0</pose><link name="link"><collision name="c"><geometry><box><size>15 0.2 2.44</size></box></geometry></collision><visual name="v"><geometry><box><size>15 0.2 2.44</size></box></geometry><material><diffuse>0.3 0.3 0.3 1</diffuse></material></visual></link></model>
+    <model name="outer_east"><static>true</static><pose>7.5 0 1.22 0 0 0</pose><link name="link"><collision name="c"><geometry><box><size>0.2 15 2.44</size></box></geometry></collision><visual name="v"><geometry><box><size>0.2 15 2.44</size></box></geometry><material><diffuse>0.3 0.3 0.3 1</diffuse></material></visual></link></model>
+    <model name="outer_west"><static>true</static><pose>-7.5 0 1.22 0 0 0</pose><link name="link"><collision name="c"><geometry><box><size>0.2 15 2.44</size></box></geometry></collision><visual name="v"><geometry><box><size>0.2 15 2.44</size></box></geometry><material><diffuse>0.3 0.3 0.3 1</diffuse></material></visual></link></model>
+
+    <!-- Maze internal walls - NIDAR style: corridors >=1m, rooms 2x2m -->
+    <!-- Corridor pattern -->
+    <model name="wall_1"><static>true</static><pose>-3 3 1.22 0 0 0</pose><link name="link"><collision name="c"><geometry><box><size>6 0.2 2.44</size></box></geometry></collision><visual name="v"><geometry><box><size>6 0.2 2.44</size></box></geometry><material><diffuse>0.5 0.5 0.5 1</diffuse></material></visual></link></model>
+    <model name="wall_2"><static>true</static><pose>0 0 1.22 0 0 0</pose><link name="link"><collision name="c"><geometry><box><size>0.2 5 2.44</size></box></geometry></collision><visual name="v"><geometry><box><size>0.2 5 2.44</size></box></geometry><material><diffuse>0.5 0.5 0.5 1</diffuse></material></visual></link></model>
+    <model name="wall_3"><static>true</static><pose>3 -2 1.22 0 0 0</pose><link name="link"><collision name="c"><geometry><box><size>4 0.2 2.44</size></box></geometry></collision><visual name="v"><geometry><box><size>4 0.2 2.44</size></box></geometry><material><diffuse>0.5 0.5 0.5 1</diffuse></material></visual></link></model>
+    <model name="wall_4"><static>true</static><pose>-2 -3 1.22 0 0 0</pose><link name="link"><collision name="c"><geometry><box><size>5 0.2 2.44</size></box></geometry></collision><visual name="v"><geometry><box><size>5 0.2 2.44</size></box></geometry><material><diffuse>0.5 0.5 0.5 1</diffuse></material></visual></link></model>
+    <model name="wall_5"><static>true</static><pose>-5 -1 1.22 0 0 0</pose><link name="link"><collision name="c"><geometry><box><size>0.2 6 2.44</size></box></geometry></collision><visual name="v"><geometry><box><size>0.2 6 2.44</size></box></geometry><material><diffuse>0.5 0.5 0.5 1</diffuse></material></visual></link></model>
+    <!-- Rooms 2x2m -->
+    <model name="room1_wall_n"><static>true</static><pose>5 5 1.22 0 0 0</pose><link name="link"><collision name="c"><geometry><box><size>2 0.2 2.44</size></box></geometry></collision><visual name="v"><geometry><box><size>2 0.2 2.44</size></box></geometry><material><diffuse>0.6 0.6 0.6 1</diffuse></material></visual></link></model>
+    <model name="room1_wall_s"><static>true</static><pose>5 3 1.22 0 0 0</pose><link name="link"><collision name="c"><geometry><box><size>2 0.2 2.44</size></box></geometry></collision><visual name="v"><geometry><box><size>2 0.2 2.44</size></box></geometry><material><diffuse>0.6 0.6 0.6 1</diffuse></material></visual></link></model>
+    <model name="room1_wall_e"><static>true</static><pose>6 4 1.22 0 0 0</pose><link name="link"><collision name="c"><geometry><box><size>0.2 2 2.44</size></box></geometry></collision><visual name="v"><geometry><box><size>0.2 2 2.44</size></box></geometry><material><diffuse>0.6 0.6 0.6 1</diffuse></material></visual></link></model>
+
+    <!-- Survivors - up to 6, in rooms/corridors -->
+    <model name="survivor_1"><static>true</static><pose>5 4 0.9 0 0 0</pose><link name="link"><collision name="c"><geometry><box><size>0.4 0.3 1.7</size></box></geometry></collision><visual name="v"><geometry><box><size>0.4 0.3 1.7</size></box></geometry><material><diffuse>0 0 1 1</diffuse></material></visual></link></model>
+    <model name="survivor_2"><static>true</static><pose>-4 -5 0.9 0 0 0</pose><link name="link"><collision name="c"><geometry><box><size>0.4 0.3 1.7</size></box></geometry></collision><visual name="v"><geometry><box><size>0.4 0.3 1.7</size></box></geometry><material><diffuse>0 1 0 1</diffuse></material></visual></link></model>
+    <model name="survivor_3"><static>true</static><pose>6 -4 0.9 0 0 0</pose><link name="link"><collision name="c"><geometry><box><size>0.4 0.3 1.7</size></box></geometry></collision><visual name="v"><geometry><box><size>0.4 0.3 1.7</size></box></geometry><material><diffuse>1 0 0 1</diffuse></material></visual></link></model>
+    <model name="survivor_4"><static>true</static><pose>-5 5 0.9 0 0 0</pose><link name="link"><collision name="c"><geometry><box><size>0.4 0.3 1.7</size></box></geometry></collision><visual name="v"><geometry><box><size>0.4 0.3 1.7</size></box></geometry><material><diffuse>1 1 0 1</diffuse></material></visual></link></model>
+    <model name="survivor_5"><static>true</static><pose>2 6 0.9 0 0 0</pose><link name="link"><collision name="c"><geometry><box><size>0.4 0.3 1.7</size></box></geometry></collision><visual name="v"><geometry><box><size>0.4 0.3 1.7</size></box></geometry><material><diffuse>1 0 1 1</diffuse></material></visual></link></model>
+    <model name="survivor_6"><static>true</static><pose>-2 0 0.9 0 0 0</pose><link name="link"><collision name="c"><geometry><box><size>0.4 0.3 1.7</size></box></geometry></collision><visual name="v"><geometry><box><size>0.4 0.3 1.7</size></box></geometry><material><diffuse>0 1 1 1</diffuse></material></visual></link></model>
+
+  </world>
+</sdf>

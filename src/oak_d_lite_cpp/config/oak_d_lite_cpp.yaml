@@ -1,0 +1,7 @@
+# Same as oak_d_lite_vio.yaml but for C++ pipeline
+oak:
+  ros__parameters:
+    camera:
+      i_enable_imu: true
+      i_pipeline_type: RGBD
+      i_usb_speed: SUPER

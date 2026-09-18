@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>person_detection</name>
+  <version>1.0.0</version>
+  <description>YOLOv8 person detection for maze drone</description>
+  <maintainer email="dev@auto.drone">Auto Drone</maintainer>
+  <license>MIT</license>
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>ament_cmake_python</buildtool_depend>
+  <depend>rclpy</depend>
+  <depend>sensor_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>visualization_msgs</depend>
+  <export><build_type>ament_cmake</build_type></export>
+</package>

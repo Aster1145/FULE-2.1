@@ -60,6 +60,9 @@ class YOLODetector(Node):
                     model_path = engine_path
                     self.get_logger().info(f"Using TensorRT engine: {engine_path}")
             try:
+                import os
+                from ament_index_python.packages import get_package_share_directory
+                model_path = os.path.join(get_package_share_directory('person_detection'), '../../../../Models/best.pt')
                 self.model = YOLO(model_path)
                 self.get_logger().info(f"YOLO model loaded: {model_path} on {self.device}")
             except Exception as e:

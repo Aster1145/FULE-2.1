@@ -8,5 +8,7 @@ install(PROGRAMS
   ${PROJECT_NAME}/yolo_export.py
   DESTINATION lib/${PROJECT_NAME}
 )
-install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
+# YOLO weights live in models/ (best.pt etc.) and are resolved at runtime
+# via ament_index_python. Installed so share/person_detection/models works.
+install(DIRECTORY models DESTINATION share/${PROJECT_NAME})
 ament_package()

@@ -1,0 +1,3 @@
+# Hard constraints for FULE-2.1 (applied with `pip install -c constraints.txt`).
+# Prevents transitive deps (torch, ultralytics, opencv) from pulling NumPy 2.x.
+numpy<2.0.0

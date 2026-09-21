@@ -7,5 +7,4 @@ install(PROGRAMS
   ${PROJECT_NAME}/map_saver_with_persons.py
   DESTINATION lib/${PROJECT_NAME}
 )
-install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
 ament_package()

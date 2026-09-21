@@ -1,0 +1,29 @@
+# FULE-2.1 Python requirements (Ubuntu 22.04 ARM64, ROS 2 Humble)
+#
+# CRITICAL: NumPy must stay < 2.0.0. ROS 2 Humble's python3-opencv on ARM64
+# is built against NumPy 1.x; NumPy 2.x breaks `import cv2` with:
+#   AttributeError: _ARRAY_API not found
+# Install order matters: pin numpy FIRST, then torch/ultralytics/opencv.
+#
+# Usage:
+#   pip3 install -r requirements.txt -c constraints.txt
+
+# --- Pinned first: NumPy 1.x for python3-opencv compatibility ---
+numpy<2.0.0,>=1.21.0
+
+# --- Perception / ML (CPU wheels for ARM64 VM; use CUDA index on Jetson) ---
+ultralytics>=8.0.0
+torch>=2.0.0
+torchvision>=0.15.0
+
+# --- Utilities ---
+scipy>=1.10.0
+pyyaml>=6.0
+transforms3d>=0.4.0
+scikit-learn>=1.2.0
+
+# NOTE: Do NOT `pip install opencv-python` on the ROS VM. Use the system
+# package instead so cv_bridge keeps working:
+#   sudo apt install -y python3-opencv python3-numpy
+# If you must use pip OpenCV, pin a 4.x build compiled against NumPy 1.x:
+# opencv-python==4.8.1.78; python_version < "3.12"

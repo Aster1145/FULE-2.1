@@ -6,10 +6,17 @@
   <maintainer email="dev@auto.drone">Auto Drone</maintainer>
   <license>MIT</license>
   <buildtool_depend>ament_cmake</buildtool_depend>
+  <!-- Gazebo Classic (Gazebo 11) physics server for nidar_air_mouse_sim. -->
+  <exec_depend>gazebo_ros</exec_depend>
+  <!-- Gazebo Harmonic fallback (ros_gz_* bridge stack). -->
   <exec_depend>ros_gz_bridge</exec_depend>
+  <exec_depend>ros_gz_sim</exec_depend>
   <exec_depend>fuel_ros2_exploration</exec_depend>
   <exec_depend>offboard_control</exec_depend>
   <exec_depend>person_detection</exec_depend>
   <exec_depend>maze_mapping</exec_depend>
+  <exec_depend>drone_description</exec_depend>
+  <exec_depend>nodding_lidar</exec_depend>
+  <exec_depend>air_mouse_mission</exec_depend>
   <export><build_type>ament_cmake</build_type></export>
 </package>

@@ -6,7 +6,8 @@
   <maintainer email="nidar@airmouse.in">NIDAR Team</maintainer>
   <license>MIT</license>
   <buildtool_depend>ament_cmake</buildtool_depend>
-  <exec_depend>depthai-ros</exec_depend>
+  <!-- Physical hardware only. Skipped in simulation (is_sim:=true), so the
+       VM does not need the camera plugged in or the driver running. -->
   <exec_depend>depthai_ros_driver</exec_depend>
   <export><build_type>ament_cmake</build_type></export>
 </package>

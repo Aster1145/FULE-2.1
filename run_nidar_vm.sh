@@ -45,7 +45,7 @@ tmux send-keys -t $SESSION:0 "MicroXRCEAgent udp4 -p 8888" C-m
 
 # Pane 1: PX4 SITL NIDAR World Headless (VM friendly)
 tmux split-window -h -t $SESSION:0
-tmux send-keys -t $SESSION:0.1 "cd $PX4_DIR && export LIBGL_ALWAYS_SOFTWARE=1 && HEADLESS=1 PX4_SYS_AUTOSTART=4015 PX4_GZ_MODEL=x500_maze_explorer PX4_GZ_WORLD=nidar_air_mouse ./build/px4_sitl_default/bin/px4" C-m
+tmux send-keys -t $SESSION:0.1 "cd $PX4_DIR && export LIBGL_ALWAYS_SOFTWARE=1 QT_QPA_PLATFORM=xcb && HEADLESS=1 PX4_SYS_AUTOSTART=4015 PX4_GZ_MODEL=x500_maze_explorer PX4_GZ_WORLD=nidar_air_mouse ./build/px4_sitl_default/bin/px4" C-m
 
 # Pane 2: ROS2 Bridges + Nodding Lidar C++
 tmux split-window -v -t $SESSION:0.0

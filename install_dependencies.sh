@@ -26,8 +26,13 @@ else
   echo "ROS2 Humble already installed"
 fi
 
-# Gazebo Harmonic
-sudo apt install -y gz-harmonic
+# Gazebo Classic 11 (primary for nidar_air_mouse_sim.launch.py gzserver) +
+# Gazebo Harmonic (fallback for ros_gz_sim stack). Install Classic first.
+sudo apt install -y gazebo libgazebo-dev ros-humble-gazebo-ros-pkgs ros-humble-gazebo-ros || echo "gazebo_ros install skipped (check ROS apt source)"
+sudo apt install -y gz-harmonic || echo "gz-harmonic install skipped"
+
+# System OpenCV/NumPy for cv_bridge (prefer apt over pip to avoid ABI breaks)
+sudo apt install -y python3-opencv python3-numpy
 
 # PX4 deps
 echo "Installing PX4 dependencies..."
@@ -57,8 +62,22 @@ fi
 sudo apt install -y libceres-dev libgoogle-glog-dev libeigen3-dev libopencv-contrib-dev libyaml-cpp-dev libpcl-dev
 
 # Python deps
-pip3 install ultralytics torch torchvision --extra-index-url https://download.pytorch.org/whl/cpu
-pip3 install opencv-python numpy scipy pyyaml transforms3d scikit-learn
+# CRITICAL (ARM64): pin numpy<2.0.0 FIRST. ROS 2 python3-opencv breaks with
+# NumPy 2.x (AttributeError: _ARRAY_API not found). Install order matters.
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+pip3 install --upgrade "numpy<2.0.0" -c "$SCRIPT_DIR/constraints.txt" 2>/dev/null || pip3 install --upgrade "numpy<2.0.0"
+pip3 install ultralytics torch torchvision --extra-index-url https://download.pytorch.org/whl/cpu -c "$SCRIPT_DIR/constraints.txt" 2>/dev/null || pip3 install ultralytics torch torchvision --extra-index-url https://download.pytorch.org/whl/cpu
+# NOTE: do NOT pip-install opencv-python on the ROS VM; use python3-opencv (apt).
+pip3 install scipy pyyaml transforms3d scikit-learn -c "$SCRIPT_DIR/constraints.txt" 2>/dev/null || pip3 install scipy pyyaml transforms3d scikit-learn
+# Full pinned set (same as above, reproducible):
+pip3 install -r "$SCRIPT_DIR/requirements.txt" -c "$SCRIPT_DIR/constraints.txt" || true
+python3 "$SCRIPT_DIR/scripts/check_numpy_compat.py" || echo "WARNING: NumPy/OpenCV check failed - run: pip3 install --upgrade \"numpy<2.0.0\""
+
+# VM display defaults (UTM / Apple Silicon): X11 + software rendering.
+echo "export QT_QPA_PLATFORM=xcb" >> ~/.bashrc 2>/dev/null || true
+echo "export LIBGL_ALWAYS_SOFTWARE=1" >> ~/.bashrc 2>/dev/null || true
+export QT_QPA_PLATFORM=xcb
+export LIBGL_ALWAYS_SOFTWARE=1
 
 # rosdep
 sudo rosdep init || true

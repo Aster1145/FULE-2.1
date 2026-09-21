@@ -9,5 +9,10 @@
   <buildtool_depend>ament_cmake_python</buildtool_depend>
   <depend>rclpy</depend>
   <depend>nav_msgs</depend>
+  <depend>visualization_msgs</depend>
+  <depend>cv_bridge</depend>
+  <!-- NumPy MUST stay < 2.0.0 for python3-opencv (see requirements.txt). -->
+  <exec_depend version_lt="2.0.0">python3-numpy</exec_depend>
+  <exec_depend>python3-opencv</exec_depend>
   <export><build_type>ament_cmake</build_type></export>
 </package>
